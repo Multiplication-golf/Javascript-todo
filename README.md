@@ -2,7 +2,7 @@
 
 ##This small script is spossed to proved magible and easy to work with todo
 
-## contributers well come
+##contributers well come
 
 No more comments horray!
 
