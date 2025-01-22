@@ -1,9 +1,9 @@
 const fs = require(fs);
-export class todo(name) {
+export class todo {
   constructor(name,author,type="JSON",path=`TODO/todo_${name}.json`,startdate=Date.now(),newFile=false) {
     this.name = name;
     this.author = author;
-    this.startdate = startdate;
+    this.startdate = startdate; 
     this.path = `TODO/todo_${name}.json`
     if (!newFile) {
       fs.readFile("users.json", function (err, data) {
@@ -21,7 +21,7 @@ export class todo(name) {
       if (err) throw err
       console.log("a new TODO file has been created");
     });
-    fs.writeFile(this.path, {Todos:[],author:this.author,name:this.name,startdate:this.startdate}, options, callback)
+    fs.writeFile(this.path, {Todos:[],author:this.author,name:this.name,startdate:this.startdate})
     this.fileData = {Todos:[],author:this.author,name:this.name,startdate:this.startdate};
   }
   
@@ -33,7 +33,7 @@ export class todo(name) {
     var deleteItem = this.fileData.Todos.find((item_) => 
       item_.id === id
     )
-    if (deleteItem === undfinded) console.log(`No TODOs with the id ${id} found`);
+    if (deleteItem === undefined) console.log(`No TODOs with the id ${id} found`);
     this.fileData.Todos = this.fileData.Todos.splice(this.fileData.Todos.indexOf(deleteItem),1);
   }
   
@@ -42,7 +42,7 @@ export class todo(name) {
       if (err) {
           return console.error(err);
       }
-    }
+    })
   }
   
   getFullTodos() {
