@@ -6,7 +6,7 @@ export class todo {
     this.startdate = startdate; 
     this.type = json
     this.path = `TODO/todo_${name}.${type}`
-    if (!newFile) {
+    if (newFile) {
       fs.readFile("users.json", function (err, data) {
         if (err) throw err;
         data = JSON.parse(data);
