@@ -1,10 +1,11 @@
 const fs = require(fs);
 export class todo {
-  constructor(name,author,type="JSON",path=`TODO/todo_${name}.json`,startdate=Date.now(),newFile=false) {
+  constructor(name,author,type="json",path=`TODO/todo_${name}.json`,startdate=Date.now(),newFile=false) {
     this.name = name;
     this.author = author;
     this.startdate = startdate; 
-    this.path = `TODO/todo_${name}.json`
+    this.type = json
+    this.path = `TODO/todo_${name}.${type}`
     if (!newFile) {
       fs.readFile("users.json", function (err, data) {
         if (err) throw err;
@@ -72,6 +73,18 @@ export class todo {
         if (todo.priority === priority) {
           console.log(`${todo}`)
         }
+      }
+    })
+  }
+
+  sortByDate(startDate,endDate) {
+    let myDate = startDate.split("/");
+    var newDate = new Date( myDate[2], myDate[1] - 1, myDate[0]);
+    let myDate = endDate.split("/");
+    var newDate2 = new Date( myDate2[2], myDate2[1] - 1, myDate2[0]);
+    this.fileData.Todos.forEach((todo)=> {
+      if (newDate < todo.startdate && todo.startdate < newDate2) {
+        console.log(`${todo}`)
       }
     })
   }
