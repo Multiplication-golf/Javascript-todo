@@ -25,8 +25,8 @@ export class todo {
     this.fileData = {Todos:[],author:this.author,name:this.name,startdate:this.startdate};
   }
   
-  addItem(item,id,name="",startdate="",duedate="") {
-    this.fileData.Todos.push({data:item,id:id,name:name,startdate:startdate,duedate:duedate})
+  addItem(item,id,name="",startdate="",duedate="",priority="low") {
+    this.fileData.Todos.push({data:item,id:id,name:name,startdate:startdate,duedate:duedate,priority:priority})
   }
   
   deleteItem(id) {
@@ -66,4 +66,13 @@ export class todo {
     })
   }
   
+  sortByPriority(priority) {
+    this.fileData.Todos.forEach((todo)=>{
+      if (todo.priority !== "") {
+        if (todo.priority === priority) {
+          console.log(`${todo}`)
+        }
+      }
+    })
+  }
 }
