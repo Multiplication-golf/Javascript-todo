@@ -1,6 +1,6 @@
 # Javascript-todo
 
-## This small script is supposed to prove manageable and easy to work with todo interface
+## This small script is supposed to provide manageable and easy to work with todo interface
 
 ## contributers well come
 
