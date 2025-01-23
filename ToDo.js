@@ -77,6 +77,18 @@ export class todo {
     })
   }
 
+  returnByPriority(priority) {
+    var listtep = []
+    this.fileData.Todos.forEach((todo)=>{
+      if (todo.priority !== "") {
+        if (todo.priority === priority) {
+          listtep.push(todo)
+        }
+      }
+    })
+    return listtep
+  }
+
   sortByDate(startDate,endDate) {
     let myDate = startDate.split("/");
     var newDate = new Date( myDate[2], myDate[1] - 1, myDate[0]);
@@ -87,5 +99,43 @@ export class todo {
         console.log(`${todo}`)
       }
     })
+  }
+  
+  generateTodoFile(location,type,higharcy) {
+    var genstr;
+    if (type === "md") {
+      genstr = ``
+      higharcy.forEach((pri) => {
+        genstr += "========================\n"
+        genstr += "##"+pri
+        genstr += "\n========================\n"
+        var tempTodos = returnByPriority(pri)
+        tempTodos.forEach((todo) => {
+          genstr += todo.name+":"+todo.item+"\n\n"
+        })
+      })
+    }
+    if (fs.existsSync(`${location}.${type}`)) {
+      console.log(`${location}.${type} exsists already are you sure you want to over write it`);
+      var input = prompt("yes/no: ");
+      if (input === "yes") {
+        fs.writeFile(`${location}.${type}`, genstr, function (err) {
+        if (err) {
+            return console.error(err);
+        }
+      }
+    } else {
+      fs.open(`${location}.${type}`, "r+", function (err, fd) {
+        if (err) throw err
+        console.log("a new TODO file has been created");
+      });
+      fs.writeFile(`${location}.${type}`, genstr, function (err) {
+      if (err) {
+          return console.error(err);
+      }
+        console.log(genstr)
+    })
+    }
+
   }
 }
