@@ -1,10 +1,19 @@
 const fs = require(fs);
+
+function typecheck(ex,varible,par) {
+  if (ex !== typeof varible) throw `${par} is exspected to be a ${ex} got ${typeof varible}`
+}
+
 export class todo {
   constructor(name,author,type="json",path=`TODO/todo_${name}.json`,startdate=Date.now(),newFile=false) {
+    typecheck("string", name ,"name")
+    typecheck("string", author ,"author")
+    typecheck("number", startdate ,"startdate")
+    typecheck("string", type ,"type")
     this.name = name;
     this.author = author;
     this.startdate = startdate; 
-    this.type = json
+    this.type = type
     this.path = `TODO/todo_${name}.${type}`
     if (newFile) {
       fs.readFile("users.json", function (err, data) {
@@ -27,10 +36,15 @@ export class todo {
   }
   
   addItem(item,id,name="",startdate="",duedate="",priority="low") {
+    typecheck("string", id ,"id")
+    typecheck("string", name ,"name")
+    typecheck("string", duedate ,"duedate")
+    typecheck("string", startdate ,"startdate")
     this.fileData.Todos.push({data:item,id:id,name:name,startdate:startdate,duedate:duedate,priority:priority})
   }
   
   deleteItem(id) {
+    typecheck("string", id ,"id")
     var deleteItem = this.fileData.Todos.find((item_) => 
       item_.id === id
     )
@@ -90,6 +104,8 @@ export class todo {
   }
 
   sortByDate(startDate,endDate) {
+    typecheck("string", startDate ,"startDate")
+    typecheck("string", endDate ,"endDate")
     let myDate = startDate.split("/");
     var newDate = new Date( myDate[2], myDate[1] - 1, myDate[0]);
     let myDate = endDate.split("/");
@@ -103,6 +119,9 @@ export class todo {
   
   generateTodoFile(location,type,higharcy) {
     var genstr;
+    typecheck("string", location ,"location")
+    typecheck("string", type ,"type")
+    typecheck("object", higharcy ,"higharcy")
     if (type === "md") {
       genstr = ``
       higharcy.forEach((pri) => {
