@@ -48,8 +48,38 @@ export class todo {
     var deleteItem = this.fileData.Todos.find((item_) => 
       item_.id === id
     )
-    if (deleteItem === undefined) console.log(`No TODOs with the id ${id} found`);
+    if (deleteItem === undefined) {
+      console.log(`No TODOs with the id ${id} found`);
+      return null
+    }
     this.fileData.Todos = this.fileData.Todos.splice(this.fileData.Todos.indexOf(deleteItem),1);
+  }
+
+  deleteItemBy(condition) {
+    typecheck("string", condition ,"condition")
+    var deleteItem = this.fileData.Todos.find((item) => 
+      condition
+    )
+    if (deleteItem === undefined) {
+      console.log(`No TODOs that meet this condition ${condition}`)
+      return null
+    }
+    this.fileData.Todos = this.fileData.Todos.splice(this.fileData.Todos.indexOf(deleteItem),1);
+  }
+  
+  deleteItemsBy(condition) {
+    var tempreturns = [];
+    typecheck("string", condition ,"condition")
+    this.fileData.Todos.forEach((item) => {
+        if (condition) tempreturns.push(item)
+    })
+    if (tempreturns.length === 0) {
+      console.log(`No TODOs that meet this condition ${condition}`)
+      return null
+    }
+    tempreturns.forEach((deleteItem)=>{
+      this.fileData.Todos = this.fileData.Todos.splice(this.fileData.Todos.indexOf(deleteItem),1);
+    })
   }
   
   flush() {
@@ -63,12 +93,21 @@ export class todo {
   getFullTodos() {
     console.log(this.fileData.Todos)
   }
+
+  returnFullTodos() {
+    return this.fileData.Todos;
+  }
   
   getInfo() {
     console.log(this.name)
     console.log(this.author)
     console.log(this.startdate)
     console.log(this.path)
+  }
+
+  returnInfo() {
+    data = {name: this.name, author: this.author, dateStarted: this.startdate, filePath:this.path};
+    return data
   }
 
   getOverdueTodos() {
@@ -79,6 +118,18 @@ export class todo {
         }
       }
     })
+  }
+
+  returnOverdueTodos() {
+    let tempreturns = [];
+    this.fileData.Todos.forEach((todo)=>{
+      if (todo.duedate !== "") {
+        if (todo.duedate < Date.now()) {
+          tempreturns.push(todo)
+        }
+      }
+    })
+    return tempreturns
   }
   
   sortByPriority(priority) {
